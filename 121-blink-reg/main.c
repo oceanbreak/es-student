@@ -21,6 +21,6 @@ int main()
         *gpio_out_set = led_mask;
         sleep_ms(250);
         *gpio_out_clr = led_mask;
-        sleep_ms(950);
+        sleep_ms(1000);
     }
 }
