@@ -4,7 +4,7 @@ set(PICO_PLATFORM rp2040)
 
 include(pico_sdk_import.cmake)
 
-project(121-blink-reg)
+project(121_blink_reg)
 
 pico_sdk_init()
 
