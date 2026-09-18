@@ -8,7 +8,7 @@ int main()
 
     while(1)
     {
-        printf("Hello world!\n");
+        printf("Hello, world!\n");
         sleep_ms(1000);
     }
 }
