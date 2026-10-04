@@ -1,0 +1,28 @@
+задание: 2.1.1
+проект: 211-command-usb
+устройство: 2e8a:000a
+серийный номер: E660D4A0A79A7134
+порт: COM3
+начало: 2026-10-04T22:06:08
+   0.000 --> enable
+   0.141 <-- enable
+   0.141 <-- dbg read_line:70 got enable
+   0.141 <-- inf handle_command:31 led on
+   2.172 --> disable
+   2.313 <-- disable
+   2.313 <-- dbg read_line:70 got disable
+   2.329 <-- inf handle_command:36 led off
+   4.344 --> info
+   4.438 <-- info
+   4.438 <-- dbg read_line:70 got info
+   4.438 <-- project: 211-command-usb
+   4.438 <-- repo: https://github.com/oceanbreak/es-student
+   4.438 <-- board: pico
+   4.438 <-- serial: E660D4A0A79A7134
+   4.454 <-- chip: manufacturer 0x927, part 0x0002, revision 1
+   4.954 <-- pico-sdk: 2.3.0
+   6.485 --> nosuchcommand
+   6.766 <-- nosuchcommand
+   6.766 <-- dbg read_line:70 got nosuchcommand
+   6.766 <-- err handle_command:48 unknown command nosuchcommand
+итог: отправлено команд 4, принято строк 17
