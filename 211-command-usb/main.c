@@ -3,7 +3,7 @@
 #include "led.h"
 #include "log.h"
 #include "device.h"
-#include "string.h"
+#include <string.h>
 
 #define LINE_SIZE 32
 
@@ -45,7 +45,7 @@ void handle_command(const char *command)
     }
     else
     {
-        LOG_ERR("unknown command %s\n", command);
+        LOG_ERR("unknown command: %s\n", command);
     }
 }
 
