@@ -3,7 +3,9 @@
 #include "led.h"
 #include "log.h"
 #include "device.h"
+#include "memory.h"
 #include <string.h>
+
 
 #define LINE_SIZE 32
 
@@ -63,6 +65,7 @@ void cmd_ping(void)
     // Печатаем ответ на Ping
     printf("pong\n");
 }
+
 // -----------------------------------------------------------
 
 
@@ -73,6 +76,7 @@ const struct command_t commands[] = {
     {"info", cmd_info},
     {"version", cmd_version},
     {"ping", cmd_ping},
+    {"mem_info", cmd_mem_info}
 };
 
 
