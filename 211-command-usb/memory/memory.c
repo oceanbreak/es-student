@@ -30,9 +30,7 @@ static void row(const char *name, uintptr_t start, uintptr_t end)
 }
 
 
-
-
-void cmd_mem_info(void)
+void mem_info(void)
 {
     printf("%-10s %-10s %-10s %-10s\n", "area", "start", "end", "size");
     row("flash", (uintptr_t)XIP_BASE, (uintptr_t)(XIP_BASE + PICO_FLASH_SIZE_BYTES));

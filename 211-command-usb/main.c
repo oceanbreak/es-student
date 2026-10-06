@@ -66,6 +66,12 @@ void cmd_ping(void)
     printf("pong\n");
 }
 
+void cmd_mem_info(void)
+{
+    // Печатаем ответ на mem_info
+    mem_info();
+}
+
 // -----------------------------------------------------------
 
 
