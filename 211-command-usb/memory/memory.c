@@ -1,8 +1,11 @@
 #include "memory.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 #include "hardware/regs/addressmap.h"
 #include "pico/stdlib.h"
+#include "command.h"
+#include "device.h"
 
 const uintptr_t SRAM_SIZE = 264*1024;
 const uintptr_t ROM_SIZE = 16*1024;
@@ -20,8 +23,17 @@ extern char __HeapLimit;
 extern char __StackBottom;
 extern char __StackTop;
 
-// unsigned data_flash_size;
-// unsigned data_flash_end;
+
+// Код к заданию 2.1.4
+int main(void);
+
+uint32_t data_variable = 100;
+uint32_t bss_variable;
+uintptr_t code_addr;
+uint16_t first;
+
+
+// Функции 2.1.3
 
 static void row(const char *name, uintptr_t start, uintptr_t end)
 {
@@ -78,5 +90,54 @@ void mem_info(void)
     printf("   ram free     %8u for hear and %u for stack\n",
             (unsigned)(&__HeapLimit - &__bss_end__),
             (unsigned)(&__StackTop - &__StackBottom));
+
+}
+
+// Функции 2.1.4
+void fw_info(void)
+{
+        data_variable = data_variable+1;
+        bss_variable = bss_variable+1;
+
+        printf("%-14s %-10s %-15s\n", "object", "address", "value");
+
+        // Функция main
+        code_addr = (uintptr_t)main & ~(uintptr_t)1;
+        first = *(uint16_t *)code_addr;
+        printf("%-14s 0x%08x 0x%04x\n", "main", code_addr, first);
+
+        // Функция fw_info
+        code_addr = (uintptr_t)fw_info & ~(uintptr_t)1;
+        first = *(uint16_t *)code_addr;
+        printf("%-14s 0x%08x 0x%04x\n", "fw_info", code_addr, first);
+
+        // Адреса обработчиков
+        for (uint i=0; i<command_count; i++)
+        {
+                printf("- %-12s 0x%08x\n", commands[i].name, (uint16_t *)((uintptr_t)commands[i].handler & ~1u));
+        }
+
+        //DEVICE INFO
+        printf("%-14s 0x%08x %15s\n", "DEVICE_PROJECT", (void *)DEVICE_PROJECT, DEVICE_PROJECT);
+        printf("%-14s 0x%08x %15s\n", "DEVICE_BOARD", (void *)DEVICE_BOARD, DEVICE_BOARD);
+
+        // Variables
+        printf("%-14s 0x%08x %u\n", "data_variable", (uintptr_t)&data_variable, data_variable);
+        printf("%-14s 0x%08x %u\n", "bss_variable", (uintptr_t)&bss_variable, bss_variable);
+
+
+        // Stack and heap
+        uint32_t stack_variable = 1946;
+        uint32_t *heap_variable = malloc(sizeof(uint32_t));
+
+        if (heap_variable != NULL)
+        {
+                *heap_variable = 1951;
+        }
+
+        printf("%-14s 0x%08x %u\n", "stack_variable", (uintptr_t)&stack_variable, stack_variable);
+        printf("%-14s 0x%08x %u\n", "heap_variable", (uintptr_t)heap_variable, *heap_variable);
+
+        free(heap_variable);
 
 }
