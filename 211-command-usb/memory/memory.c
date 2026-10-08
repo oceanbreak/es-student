@@ -102,13 +102,13 @@ void fw_info(void)
         printf("%-14s %-10s %-15s\n", "object", "address", "value");
 
         // Функция main
-        code_addr = (uintptr_t)main & ~1u;
-        first = *(uint16_t *)code_addr;
+        code_addr = (uintptr_t)main;
+        first = *(uint16_t *)(code_addr & ~1u);
         printf("%-14s 0x%08x 0x%04x\n", "main", code_addr, first);
 
         // Функция fw_info
-        code_addr = (uintptr_t)fw_info & ~1u;
-        first = *(uint16_t *)code_addr;
+        code_addr = (uintptr_t)fw_info;
+        first = *(uint16_t *)(code_addr & ~1u);
         printf("%-14s 0x%08x 0x%04x\n", "fw_info", code_addr, first);
 
         // Commands
