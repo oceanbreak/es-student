@@ -102,24 +102,28 @@ void fw_info(void)
         printf("%-14s %-10s %-15s\n", "object", "address", "value");
 
         // Функция main
-        code_addr = (uintptr_t)main & ~(uintptr_t)1;
+        code_addr = (uintptr_t)main & ~1u;
         first = *(uint16_t *)code_addr;
         printf("%-14s 0x%08x 0x%04x\n", "main", code_addr, first);
 
         // Функция fw_info
-        code_addr = (uintptr_t)fw_info & ~(uintptr_t)1;
+        code_addr = (uintptr_t)fw_info & ~1u;
         first = *(uint16_t *)code_addr;
         printf("%-14s 0x%08x 0x%04x\n", "fw_info", code_addr, first);
+
+        // Commands
+        printf("%-14s 0x%08x\n", "commands", (uintptr_t)&commands);
 
         // Адреса обработчиков
         for (uint i=0; i<command_count; i++)
         {
-                printf("- %-12s 0x%08x\n", commands[i].name, (uint16_t *)((uintptr_t)commands[i].handler & ~1u));
+                // code_addr = (uintptr_t)(commands[i].handler) & ~1u;
+                printf("- %-12s 0x%08x\n", commands[i].name, (uint16_t *)((uintptr_t)(commands[i].handler) & ~1u));
         }
 
         //DEVICE INFO
-        printf("%-14s 0x%08x %15s\n", "DEVICE_PROJECT", (void *)DEVICE_PROJECT, DEVICE_PROJECT);
-        printf("%-14s 0x%08x %15s\n", "DEVICE_BOARD", (void *)DEVICE_BOARD, DEVICE_BOARD);
+        printf("%-14s 0x%08x %-15s\n", "DEVICE_PROJECT", (void *)DEVICE_PROJECT, DEVICE_PROJECT);
+        printf("%-14s 0x%08x %-15s\n", "DEVICE_BOARD", (void *)DEVICE_BOARD, DEVICE_BOARD);
 
         // Variables
         printf("%-14s 0x%08x %u\n", "data_variable", (uintptr_t)&data_variable, data_variable);
