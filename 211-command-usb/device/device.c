@@ -8,7 +8,7 @@
 #include "hardware/regs/sysinfo.h"
 #include "pico/version.h"
 
-struct info_t device_card;
+// struct info_t device_card;
 
 void device_info(void)
 {
@@ -52,10 +52,15 @@ void dev_info(void)
 
     // printf("Processed revision: %u, version: %u\n", revision, version);
     // Пишем структуру
-    device_card.revision =  revision;
-    device_card.version = version;
-    // strcpy(device_card.name, "             ");
-    strcpy(device_card.name, DEVICE_NAME);
+    struct info_t device_card = {
+        version,
+        DEVICE_NAME,
+        revision,
+    };
+    // device_card.revision =  revision;
+    // device_card.version = version;
+    // // strcpy(device_card.name, "             ");
+    // strcpy(device_card.name, DEVICE_NAME);
 
 
 

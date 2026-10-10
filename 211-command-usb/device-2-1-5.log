@@ -3,14 +3,14 @@
 устройство: 2e8a:000a
 серийный номер: E660D4A0A79A7134
 порт: COM3
-начало: 2026-10-10T23:39:16
+начало: 2026-10-10T23:49:11
    0.000 --> dev_info
-   0.172 <-- dev_info
-   0.172 <-- dbg read_line:140 got dev_info
-   0.172 <-- struct          address     size offset value
-   0.172 <-- device_card     0x20001f74    20
-   0.172 <-- - version       0x20001f74     4      0 0x00100000
-   0.172 <-- - name          0x20001f78    13      4 es-cmd-usb
-   0.172 <-- - revision      0x20001f85     1     17 0x00000000
+   0.156 <-- dev_info
+   0.156 <-- dbg read_line:140 got dev_info
+   0.156 <-- struct          address     size offset value
+   0.172 <-- device_card     0x20041f7c    20
+   0.172 <-- - version       0x20041f7c     4      0 0x00100000
+   0.172 <-- - name          0x20041f80    13      4 es-cmd-usb
+   0.172 <-- - revision      0x20041f8d     1     17 0x00000000
    0.172 <-- fields 18, sizeof 20, padding 2
 итог: отправлено команд 1, принято строк 8
