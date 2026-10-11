@@ -41,12 +41,12 @@ void dev_info(void)
 
 
     // Считаем версию
-    // uint32_t version_major = ((uint32_t)(uint8_t)*FIRMWARE_VERSION) << 4;
-    // uint32_t version_minor = ((uint32_t)(uint8_t)*(FIRMWARE_VERSION+2)) << 2;
-    // uint32_t version_patch = ((uint32_t)(uint8_t)*(FIRMWARE_VERSION+4)) << 4;
-    // printf("Version %u.%u.%u\n", version_major, version_minor, version_patch);
-    // uint32_t version = version_major || version_minor || version_patch;
-    uint32_t version = 0x00100000;
+    char *version_ptr = FIRMWARE_VERSION;
+    uint32_t version_major = (uint32_t)(*version_ptr - '0') << 16;
+    uint32_t version_minor = (uint32_t)(*(version_ptr + 2) - '0') << 8;
+    uint32_t version_patch = (uint32_t)(*(version_ptr + 4) - '0');
+    uint32_t version = version_major | version_minor | version_patch;
+//     uint32_t version = 0x00010000;
 
 
 
