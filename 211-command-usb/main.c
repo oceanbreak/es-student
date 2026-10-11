@@ -8,6 +8,8 @@
 #include "command.h"
 
 
+
+
 #define LINE_SIZE 32
 
 const uint BUTTON_PIN=15;
@@ -80,6 +82,11 @@ void cmd_dev_info(void)
     dev_info();
 }
 
+void cmd_boot_info(void)
+{
+    boot_info();
+}
+
 // -----------------------------------------------------------
 
 
@@ -93,6 +100,7 @@ const struct command_t commands[] = {
     {"mem_info", cmd_mem_info},
     {"fw_info", cmd_fw_info},
     {"dev_info", cmd_dev_info},
+    {"boot_info", cmd_boot_info},
 };
 
 
