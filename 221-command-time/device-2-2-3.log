@@ -3,14 +3,14 @@
 устройство: 2e8a:000a
 серийный номер: E660D4A0A79A7134
 порт: COM3
-начало: 2026-10-16T22:49:52
+начало: 2026-10-16T23:44:09
    0.000 --> calc_pi
    0.000 <-- calc_pi
-   0.000 <-- dbg read_line:174 got calc_pi
+   0.000 <-- dbg read_line:187 got calc_pi
    1.047 --> uptime
-   4.703 <-- pi 3.14159165
-   4.703 <-- time 4706 ms
-   4.703 <-- uptime
-   4.703 <-- dbg read_line:174 got uptime
-   4.703 <-- uptime: 97480 ms
+   4.687 <-- pi 3.14159165
+   4.687 <-- time 4706 ms
+   4.687 <-- uptime
+   4.687 <-- dbg read_line:187 got uptime
+   4.687 <-- uptime: 591831 ms
 итог: отправлено команд 2, принято строк 7
