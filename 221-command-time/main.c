@@ -7,6 +7,7 @@
 #include <string.h>
 #include "command.h"
 #include "clock.h"
+#include "profiling.h"
 
 #define LINE_SIZE 32
 
@@ -35,12 +36,12 @@ void blink(void)
 const uint CALC_PI_TERMS = 1000000;
 volatile double pi_result;
 
-double calc_pi(int n)
+double calc_pi(uint terms)
 {
     double sum = 0.0;
     double sign = 1.0;
 
-    for (int k = 0; k < n; k++) {
+    for (int k = 0; k < terms; k++) {
         // Прибавить очередной член ряда: ±1 / (2k + 1)
         sum += sign / (2.0 * k + 1.0);
         sign = -sign;
@@ -112,6 +113,16 @@ void cmd_uptime(void)
 {
     uptime();
 }
+
+void main_time_exec(void)
+{
+    printf("iteration avg %.2f us, max %u us\n", profiling_avg_us(), (unsigned)profiling_max_us());
+}
+
+void main_time_reset(void)
+{
+    profiling_reset_max();
+}
 // -----------------------------------------------------------
 
 
@@ -127,6 +138,8 @@ const struct command_t commands[] = {
     {"clk_info", cmd_clk_info},
     {"uptime", cmd_uptime},
     {"calc_pi", cmd_calc_pi},
+    {"main_time_exec", main_time_exec},
+    {"main_time_reset", main_time_reset},
 };
 
 
@@ -196,10 +209,12 @@ int main()
     led_init();
 
 
-
+    profiling_init();
 
     while(1)
     {
+        profiling_iteration();
+
         // Мигаем
         blink();
 
