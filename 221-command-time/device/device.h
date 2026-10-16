@@ -5,7 +5,7 @@
 #define DEVICE_NAME "es-cmd-usb"
 #define FIRMWARE_VERSION "1.1.0"
 
-#define DEVICE_PROJECT "211-command-time"
+#define DEVICE_PROJECT "221-command-time"
 #define DEVICE_REPO "https://github.com/oceanbreak/es-student"
 
 #ifndef DEVICE_BOARD
