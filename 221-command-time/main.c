@@ -57,8 +57,8 @@ void cmd_calc_pi(void)
     pi_result = calc_pi(CALC_PI_TERMS);
     uint64_t spent_us = time_us_64() - start_us;
 
-    printf("pi %.8f\n", pi_result);
-    printf("time %llu ms\n", spent_us / 1000);
+    printf("pi: %.8f\n", pi_result);
+    printf("time: %llu ms\n", spent_us / 1000);
 }
 
 //---------- ОБРАБОТЧИКИ КОМАНД ----------------
