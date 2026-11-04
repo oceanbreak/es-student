@@ -151,6 +151,12 @@ static void cmd_led_disable(const command_t *command)
 
 static void cmd_led_blink(const command_t *command)
 {
+    led_task_set_state(LED_STATE_BLINK);
+    print_led_state();
+}
+
+static void cmd_led_period(const command_t *command)
+{
     uint32_t period_ms;
 
     if (command->argc != 1 || !parse_u32(command->argv[0], &period_ms))
@@ -168,7 +174,6 @@ static void cmd_led_blink(const command_t *command)
 
     // ответ: состояние и период светодиода
     led_task_set_period_ms(period_ms);
-    led_task_set_state(LED_STATE_BLINK);
     print_led_state();
 }
 
@@ -187,7 +192,8 @@ const api_command_t api_commands[] = {
     {"main_time_reset", "reset maximum iteration", main_time_reset},
     {"led_enable", "set led ON", cmd_led_enable},
     {"led_disable", "set led OFF", cmd_led_disable},
-    {"led_blink", "set led in blink mode with period", cmd_led_blink},
+    {"led_blink", "set led in blink mode", cmd_led_blink},
+    {"led_period", "set blink period", cmd_led_period},
 };
 
 
