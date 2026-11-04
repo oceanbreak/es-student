@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <ctype.h>
-#include "led.h"
+#include "led-task.h"
 #include "log.h"
 #include "device.h"
 #include "profiling.h"
@@ -75,17 +75,14 @@ static double calc_pi(uint terms)
 
 //---------- ОБРАБОТЧИКИ КОМАНД ----------------
 
-void cmd_calc_pi(const command_t *command)
+static void cmd_calc_pi(const command_t *command)
 {
-    uint32_t calc_pi_terms_value;
+    uint32_t calc_pi_terms_value = CALC_PI_TERMS;
     if (command->argc > 0)
     {
         parse_u32(command->argv[0], &calc_pi_terms_value);
     }
-    else
-    {
-        calc_pi_terms_value = CALC_PI_TERMS;
-    }
+
     uint64_t start_us = time_us_64();
     pi_result = calc_pi(calc_pi_terms_value);
     uint64_t spent_us = time_us_64() - start_us;
@@ -95,25 +92,84 @@ void cmd_calc_pi(const command_t *command)
 }
 
 
-void cmd_info(const command_t *command)
+static void cmd_info(const command_t *command)
 {
     // печатаем паспорт устройства
     device_info();
 }
 
-void cmd_uptime(const command_t *command)
+static void cmd_uptime(const command_t *command)
 {
     printf("uptime: %llu ms\n", time_us_64() / 1000);
 }
 
-void main_time_exec(const command_t *command)
+static void main_time_exec(const command_t *command)
 {
     printf("iteration avg %.2f us, max %u us\n", profiling_avg_us(), (unsigned)profiling_max_us());
 }
 
-void main_time_reset(const command_t *command)
+static void main_time_reset(const command_t *command)
 {
     profiling_reset_max();
+}
+
+static void print_led_state(void)
+{
+    uint32_t period_ms = led_task_get_period_ms();
+    led_state_t led_state = led_task_get_state();
+    switch (led_state)
+    {
+        case LED_STATE_ON:
+        {
+            printf("led: on, period %u ms\n", (unsigned)period_ms);
+            break;
+        }
+        case LED_STATE_OFF:
+        {
+            printf("led: off, period %u ms\n", (unsigned)period_ms);
+            break;
+        }
+        case LED_STATE_BLINK:
+        {
+            printf("led: blink, period %u ms\n", (unsigned)period_ms);
+            break;
+        }
+    }
+}
+
+static void cmd_led_enable(const command_t *command)
+{
+    led_task_set_state(LED_STATE_ON);
+    print_led_state();
+}
+
+static void cmd_led_disable(const command_t *command)
+{
+    led_task_set_state(LED_STATE_OFF);
+    print_led_state();
+}
+
+static void cmd_led_blink(const command_t *command)
+{
+    uint32_t period_ms;
+
+    if (command->argc != 1 || !parse_u32(command->argv[0], &period_ms))
+    {
+        printf("error: usage led_period <period_ms>\n");
+        return;
+    }
+
+    // годится ли такой период, решает задача светодиода
+    if (!led_task_set_period_ms(period_ms))
+    {
+        printf("error: period_ms must be greater than 0\n");
+        return;
+    }
+
+    // ответ: состояние и период светодиода
+    led_task_set_period_ms(period_ms);
+    led_task_set_state(LED_STATE_BLINK);
+    print_led_state();
 }
 
 
@@ -129,6 +185,9 @@ const api_command_t api_commands[] = {
     {"calc_pi", "calculate pi: calc_pi [terms]", cmd_calc_pi},
     {"main_time_exec", "superloop iteration: average and maximum", main_time_exec},
     {"main_time_reset", "reset maximum iteration", main_time_reset},
+    {"led_enable", "set led ON", cmd_led_enable},
+    {"led_disable", "set led OFF", cmd_led_disable},
+    {"led_blink", "set led in blink mode with period", cmd_led_blink},
 };
 
 

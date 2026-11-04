@@ -118,7 +118,7 @@ void print_command(const command_t *command)
 {
     if (command!=NULL)
     {
-        printf("Name: %s 1st arg: %s, args count %u\n", command->name, command->argv[0], command->argc);
+        printf("Name: %s 1st arg: %s, args count %u\n", command->name, command->argv[0], (unsigned)command->argc);
     }
     
 }
