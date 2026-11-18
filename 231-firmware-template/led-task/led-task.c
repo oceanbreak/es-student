@@ -118,3 +118,10 @@ uint32_t led_task_get_period_ms(void)
 {
     return (half_period_us * 2) / 1000;
 }
+
+//Переключение состояния в следующее
+void led_task_next_state(void)
+{
+    led_state = (led_state + 1) % LED_STATE_NUM;
+    led_task_set_state(led_state);
+}

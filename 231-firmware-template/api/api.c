@@ -9,6 +9,7 @@
 #include "log.h"
 #include "device.h"
 #include "profiling.h"
+#include "button-task.h"
 
 #define CALC_PI_TERMS 1000000;
 // прикидка: за член ряда 4 операции с double, 175 + 110 + 190 + 110 = 585 тактов;
@@ -177,6 +178,18 @@ static void cmd_led_period(const command_t *command)
     print_led_state();
 }
 
+static void cmd_button(const command_t* command)
+{
+    if (button_task_is_pressed())
+    {
+        printf("button: pressed, presses %i\n", button_task_get_press_count());
+    }
+    else
+    {
+        printf("button: released, presses %i\n", button_task_get_press_count());
+    }
+
+}
 
 
 // -----------------------------------------------------------
@@ -194,6 +207,7 @@ const api_command_t api_commands[] = {
     {"led_disable", "set led OFF", cmd_led_disable},
     {"led_blink", "set led in blink mode", cmd_led_blink},
     {"led_period", "set blink period", cmd_led_period},
+    {"button", "get button state and press count", cmd_button},
 };
 
 

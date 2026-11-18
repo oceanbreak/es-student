@@ -8,6 +8,7 @@
 #include "profiling.h"
 #include "stdio-text-protocol.h"
 #include "api.h"
+#include "button-task.h"
 
 
 
@@ -15,6 +16,7 @@ int main()
 {
     stdio_text_protocol_init();
     led_task_init();
+    button_task_init();
 
 
     profiling_init();
@@ -25,6 +27,9 @@ int main()
 
         // Мигаем
         led_task_handle();
+
+        // Кнопочка
+        button_task_handle();
 
         // Проверяем команду
         const command_t *command = stdio_text_protocol_handle();
